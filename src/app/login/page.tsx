@@ -9,7 +9,7 @@ export default function LoginPage() {
       <div className="hidden bg-muted lg:block">
         <Image
           src="/soccer-game.jpg"
-          alt="Image"
+          alt="Soccer game in progress"
           width="1920"
           height="1080"
           className="h-full w-full object-cover brightness-[0.5] grayscale-[50%]"
