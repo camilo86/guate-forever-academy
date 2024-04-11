@@ -8,8 +8,8 @@ import { Separator } from "@/components/ui/separator"
 
 export default function LoginPage() {
   return (
-    <div className="w-full lg:grid lg:grid-cols-2 h-screen">
-      <div className="flex items-center justify-center py-12 h-full">
+    <div className="h-screen w-full lg:grid lg:grid-cols-2">
+      <div className="flex h-full items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
