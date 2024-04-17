@@ -4,7 +4,7 @@ import Link from "next/link"
 import { FaBars, FaCaretRight, FaSignOutAlt } from "react-icons/fa"
 
 import { getNameInitials } from "@/lib/strings"
-import { useSession } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
 import React from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import { Button } from "./ui/button"
@@ -68,9 +68,13 @@ export function Navbar() {
             My Account
             <FaCaretRight />
           </Link>
-          <Link href="#" className="flex items-center justify-center p-2">
+          <Button
+            variant="ghost"
+            onClick={() => signOut()}
+            className="flex items-center justify-center p-2"
+          >
             Logout <FaSignOutAlt className="ml-2 text-muted-foreground" />
-          </Link>
+          </Button>
         </div>
       )}
     </React.Fragment>
