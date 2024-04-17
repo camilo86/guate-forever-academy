@@ -23,8 +23,8 @@ export function Navbar() {
           <span className="text-lg font-bold tracking-tight">
             Guate Forever Academy
           </span>
-          <Link href="#">Dashboard</Link>
-          <Link href="#">Players</Link>
+          <Link href="/dashboard">Dashboard</Link>
+          <Link href="/players">Players</Link>
           <div className="mx-auto" />
           <UserNav />
         </div>
@@ -56,11 +56,17 @@ export function Navbar() {
             </Avatar>
             <span className="ml-2 font-semibold">{data?.user?.name}</span>
           </div>
-          <Link href="#" className="flex items-center justify-between p-2">
+          <Link
+            href="/dashboard"
+            className="flex items-center justify-between p-2"
+          >
             Dashboard
             <FaCaretRight />
           </Link>
-          <Link href="#" className="flex items-center justify-between p-2">
+          <Link
+            href="/players"
+            className="flex items-center justify-between p-2"
+          >
             Players
             <FaCaretRight />
           </Link>
