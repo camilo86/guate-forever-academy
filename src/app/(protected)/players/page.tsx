@@ -1,7 +1,6 @@
 import { DataTable } from "@/components/data-table"
-import { Button } from "@/components/ui/button"
-import { FaFutbol } from "react-icons/fa"
 
+import { RegisterPlayerSheet } from "@/components/register-player-sheet"
 import { columns } from "./columns"
 
 export default function PlayersPage() {
@@ -9,9 +8,7 @@ export default function PlayersPage() {
     <div className="container pt-6">
       <div className="mb-6 flex justify-between">
         <h1 className="text-2xl font-semibold tracking-tight">Players</h1>
-        <Button>
-          <FaFutbol className="mr-2" /> Register player
-        </Button>
+        <RegisterPlayerSheet />
       </div>
       <DataTable columns={columns} data={[]} hideFilters />
     </div>
