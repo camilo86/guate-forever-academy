@@ -1,3 +1,4 @@
+import { Navbar } from "@/components/navbar"
 import { redirect } from "next/navigation"
 import React from "react"
 import { auth } from "../actions"
@@ -13,5 +14,10 @@ export default async function ProtectedLayout({
     redirect("/login")
   }
 
-  return <React.Fragment>{children}</React.Fragment>
+  return (
+    <React.Fragment>
+      <Navbar />
+      {children}
+    </React.Fragment>
+  )
 }
