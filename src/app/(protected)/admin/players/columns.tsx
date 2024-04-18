@@ -1,0 +1,38 @@
+"use client"
+
+import { Player } from "@prisma/client"
+import { ColumnDef } from "@tanstack/react-table"
+
+export type Parent = { name: string }
+export type PlayerWithParent = Player & { user: Parent }
+
+export const columns: ColumnDef<PlayerWithParent>[] = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "user",
+    header: "Parent",
+    cell(props) {
+      const value = props.getValue() as Parent
+      return value ? value.name : "-"
+    },
+  },
+  {
+    accessorKey: "birthday",
+    header: "Birthday",
+    cell(props) {
+      const value = props.getValue()
+      return value ? new Date(value as string).toLocaleDateString() : "-"
+    },
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Member since",
+    cell(props) {
+      const value = props.getValue()
+      return value ? new Date(value as string).toLocaleDateString() : "-"
+    },
+  },
+]

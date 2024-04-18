@@ -15,12 +15,15 @@ export const config = {
     jwt({ token, account, user }) {
       if (account) {
         token.id = user?.id
+        token.isAdmin = (user as any)?.isAdmin
       }
 
       return token
     },
     session({ session, token, user }) {
       session.user.id = user.id
+      session.user.isAdmin = (user as any).isAdmin
+
       return session
     },
   },
