@@ -79,11 +79,14 @@ model Club {
 }
 
 model Invite {
-  id          String @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String
   playerId    String
   clubId      String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
   club   Club   @relation(fields: [clubId], references: [id], onDelete: Cascade)
