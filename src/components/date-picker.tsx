@@ -37,6 +37,9 @@ export function DatePicker({ date, onChange }: DatePickerProps) {
           mode="single"
           selected={date}
           onSelect={onChange}
+          captionLayout="dropdown-buttons"
+          fromYear={1920}
+          toYear={2025}
           initialFocus
         />
       </PopoverContent>

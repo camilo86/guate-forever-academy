@@ -2,6 +2,8 @@ import { SessionWrapper } from "@/components/session-wrapper"
 import { cn } from "@/lib/utils"
 import type { Metadata } from "next"
 import { Inter as FontSans } from "next/font/google"
+
+import "react-day-picker/dist/style.css"
 import "./globals.css"
 
 const fontSans = FontSans({
