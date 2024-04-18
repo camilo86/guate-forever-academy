@@ -7,12 +7,12 @@ import { getNameInitials } from "@/lib/strings"
 import { signOut, useSession } from "next-auth/react"
 import React from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { UserNav } from "./user-nav"
 
 export function Navbar() {
   const { data } = useSession()
-
   const [isOpen, setOpen] = React.useState(false)
 
   return (
@@ -55,6 +55,11 @@ export function Navbar() {
               </AvatarFallback>
             </Avatar>
             <span className="ml-2 font-semibold">{data?.user?.name}</span>
+            {data?.user?.isAdmin && (
+              <Link href="/admin">
+                <Badge variant="outline">Admin</Badge>
+              </Link>
+            )}
           </div>
           <Link
             href="/dashboard"
@@ -74,6 +79,15 @@ export function Navbar() {
             My Account
             <FaCaretRight />
           </Link>
+          {data?.user?.isAdmin && (
+            <Link
+              href="/admin"
+              className="flex items-center justify-between p-2"
+            >
+              Admin
+              <FaCaretRight />
+            </Link>
+          )}
           <Button
             variant="ghost"
             onClick={() => signOut()}

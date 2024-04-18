@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getNameInitials } from "@/lib/strings"
+import Link from "next/link"
 
 export function UserNav() {
   const { data } = useSession()
@@ -45,7 +46,11 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
+          {data?.user?.isAdmin && (
+            <DropdownMenuItem>
+              <Link href="/admin">Admin</Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
