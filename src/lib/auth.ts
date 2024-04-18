@@ -11,4 +11,17 @@ export const config = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  callbacks: {
+    jwt({ token, account, user }) {
+      if (account) {
+        token.id = user?.id
+      }
+
+      return token
+    },
+    session({ session, token, user }) {
+      session.user.id = user.id
+      return session
+    },
+  },
 } satisfies NextAuthOptions

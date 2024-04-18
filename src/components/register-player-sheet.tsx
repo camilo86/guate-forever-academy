@@ -24,8 +24,14 @@ import { FaFutbol } from "react-icons/fa"
 import { z } from "zod"
 
 import { createPlayerFormSchema } from "@/../types/guate"
+import { createPlayer } from "@/app/(protected)/players/actions"
+import { useRouter } from "next/navigation"
+import React from "react"
 
 export function RegisterPlayerSheet() {
+  const router = useRouter()
+  const [open, setOpen] = React.useState(false)
+
   // Tomorrow's date is used as the default birthday.
   // This value is not valid, so a user that tries to submit the form
   // with this default value will get an error and be forced to pick a
@@ -41,14 +47,17 @@ export function RegisterPlayerSheet() {
     },
   })
 
-  const onSubmit = (values: z.infer<typeof createPlayerFormSchema>) => {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof createPlayerFormSchema>) => {
+    setOpen(false)
+    await createPlayer(values)
+    router.replace("/players")
+    router.refresh()
   }
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button>
+        <Button onClick={() => setOpen(!open)}>
           <FaFutbol className="mr-2" /> Register player
         </Button>
       </SheetTrigger>
