@@ -1,8 +1,38 @@
+import { auth } from "@/app/actions"
+import { InvitationsDialog } from "@/components/invitations-dialog"
 import { Card } from "@/components/ui/card"
+import db from "@/lib/db"
+import { redirect } from "next/navigation"
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const session = await auth()
+  if (!session) {
+    return redirect("/login")
+  }
+
+  const players = db.player.findMany({
+    where: {
+      userId: session.user.id,
+    },
+  })
+  const playerIds = (await players).map((player) => player.id)
+
+  const invites = await db.invite.findMany({
+    where: {
+      status: "pending",
+      playerId: {
+        in: playerIds,
+      },
+    },
+    include: {
+      player: true,
+      club: true,
+    },
+  })
+
   return (
     <div className="container pt-6">
+      {invites.length > 0 && <InvitationsDialog invites={invites} />}
       <h1 className="text-2xl font-semibold tracking-tight">Upcoming events</h1>
       <div className="grid w-full gap-4 pt-6">
         <Card className="flex p-4">
