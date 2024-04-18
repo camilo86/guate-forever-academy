@@ -8,3 +8,7 @@ export const createPlayerFormSchema = z.object({
       return date < new Date(Date.now())
     }, "The date must be in the past"),
 })
+
+export const createClubFormSchema = z.object({
+  name: z.string().min(1),
+})

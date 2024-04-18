@@ -27,6 +27,7 @@ export default async function ProtectedLayout({
         </div>
         <Link href="/admin/users">Users</Link>
         <Link href="/admin/players">Players</Link>
+        <Link href="/admin/clubs">Clubs</Link>
       </div>
       {children}
     </React.Fragment>
