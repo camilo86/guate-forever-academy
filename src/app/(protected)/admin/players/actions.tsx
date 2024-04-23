@@ -32,16 +32,6 @@ export async function createClubInvite(
     throw new Error("Invalid club invite data")
   }
 
-  const hasBeenInvited = await db.invite.findFirst({
-    where: {
-      playerId: model.playerId,
-    },
-  })
-
-  if (hasBeenInvited) {
-    throw new Error("Player has already been invited")
-  }
-
   const [club, player] = await Promise.all([
     db.club.findUnique({ where: { id: model.clubId } }),
     db.player.findUnique({ where: { id: model.playerId } }),
@@ -53,6 +43,10 @@ export async function createClubInvite(
 
   if (!player) {
     throw new Error("Player not found")
+  }
+
+  if (player.clubId) {
+    throw new Error("Player is already in a club")
   }
 
   await db.invite.create({

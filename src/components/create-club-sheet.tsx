@@ -34,7 +34,7 @@ export function CreateClubSheet() {
     resolver: zodResolver(createClubFormSchema),
     defaultValues: {
       name: "",
-      stripePaymentLink: "",
+      price: 0,
     },
   })
 
@@ -74,15 +74,12 @@ export function CreateClubSheet() {
               />
               <FormField
                 control={form.control}
-                name="stripePaymentLink"
+                name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Stripe payment link</FormLabel>
+                    <FormLabel>Price</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="https://buy.stripe.com/..."
-                        {...field}
-                      />
+                      <Input placeholder="$19.99" {...field} type="number" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

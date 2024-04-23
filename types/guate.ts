@@ -11,7 +11,7 @@ export const createPlayerFormSchema = z.object({
 
 export const createClubFormSchema = z.object({
   name: z.string().min(1),
-  stripePaymentLink: z.string().min(1).url(),
+  price: z.coerce.number().min(0),
 })
 
 export const createClubInviteFormSchema = z.object({
