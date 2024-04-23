@@ -15,6 +15,10 @@ NEXTAUTH_SECRET="secret"
 # Google
 NEXT_PUBLIC_GOOGLE_CLIENT_ID="..."
 GOOGLE_CLIENT_SECRET="..."
+
+# Stripe
+STRIPE_SECRET_KEY="..."
+STRIPE_WEBHOOK_SECRET_KEY="..."
 ```
 
 3. Create migrations `npx prisma migrate dev`
