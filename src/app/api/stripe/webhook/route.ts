@@ -24,6 +24,9 @@ async function handler(req: Request) {
       )
 
       await fullfillOrder(sessionWithLineItems)
+    } else if (event.type === "customer.subscription.deleted") {
+      const subscriptionId = event.data.object.id
+      await cancelSubscription(subscriptionId)
     }
   } catch (e) {
     console.error(e)
@@ -65,6 +68,7 @@ async function fullfillOrder(
     },
     data: {
       clubId: invite.clubId,
+      subscriptionId: stripeCheckoutSession.subscription as string,
     },
   })
 
@@ -74,6 +78,32 @@ async function fullfillOrder(
     },
     data: {
       status: "accepted",
+    },
+  })
+}
+
+async function cancelSubscription(subscriptionId: string) {
+  if (!subscriptionId) {
+    throw new Error("Subscription ID missing when cancelling subscription")
+  }
+
+  const player = await db.player.findFirst({
+    where: {
+      subscriptionId,
+    },
+  })
+
+  if (!player) {
+    throw new Error("Player not found when cancelling subscription")
+  }
+
+  await db.player.update({
+    where: {
+      id: player.id,
+    },
+    data: {
+      subscriptionId: null,
+      clubId: null,
     },
   })
 }
