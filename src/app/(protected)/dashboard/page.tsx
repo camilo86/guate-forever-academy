@@ -1,6 +1,7 @@
 import { auth } from "@/app/actions"
 import { EventCard } from "@/components/event-card"
 import { InvitationsDialog } from "@/components/invitations-dialog"
+import { NoEvents } from "@/components/no-events"
 import db from "@/lib/db"
 import { redirect } from "next/navigation"
 
@@ -43,6 +44,7 @@ export default async function DashboardPage() {
       {invites.length > 0 && <InvitationsDialog invites={invites} />}
       <h1 className="text-2xl font-semibold tracking-tight">Upcoming events</h1>
       <div className="grid w-full gap-4 pt-6">
+        {events.length === 0 && <NoEvents />}
         {events.map((e) => (
           <EventCard key={e.id} event={e} />
         ))}
