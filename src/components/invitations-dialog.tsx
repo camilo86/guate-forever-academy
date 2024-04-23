@@ -1,7 +1,8 @@
 "use client"
 
-import { respondToInvite } from "@/app/actions"
+import { rejectInvite } from "@/app/actions"
 import { Club, Invite, Player } from "@prisma/client"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import React from "react"
 import { FaTicketAlt } from "react-icons/fa"
@@ -33,15 +34,30 @@ export type InvitationsDialogProps = {
 
 export function InvitationsDialog({ invites }: InvitationsDialogProps) {
   const router = useRouter()
+  const { data } = useSession()
   const [open, setOpen] = React.useState(false)
 
-  const handleInviteResponse =
-    (inviteId: string, response: "accepted" | "rejected") => async () => {
-      setOpen(false)
-      await respondToInvite(inviteId, response)
-      router.push("/dashboard")
-      router.refresh()
+  const handleAcceptInvite = (invite: InviteWithPlayerAndClub) => async () => {
+    setOpen(false)
+
+    // Adds the invite ID to the payment link
+    const paymentLink = new URL(invite.club.stripePaymentLink)
+    paymentLink.searchParams.set("client_reference_id", invite.id)
+
+    // Prefills the email if available
+    if (data?.user?.email) {
+      paymentLink.searchParams.set("prefilled_email", data.user.email)
     }
+
+    router.push(paymentLink.toString())
+  }
+
+  const handleRejectInvite = (invite: InviteWithPlayerAndClub) => async () => {
+    setOpen(false)
+    await rejectInvite(invite.id)
+    router.push("/dashboard")
+    router.refresh()
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -80,14 +96,14 @@ export function InvitationsDialog({ invites }: InvitationsDialogProps) {
                 <div className="mt-8 flex gap-2">
                   <Button
                     className="flex-grow"
-                    onClick={handleInviteResponse(invite.id, "accepted")}
+                    onClick={handleAcceptInvite(invite)}
                   >
                     Accept
                   </Button>
                   <Button
                     className="flex-grow"
                     variant="outline"
-                    onClick={handleInviteResponse(invite.id, "rejected")}
+                    onClick={handleRejectInvite(invite)}
                   >
                     Reject
                   </Button>

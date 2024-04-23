@@ -19,6 +19,7 @@ export async function createClub(model: z.infer<typeof createClubFormSchema>) {
   await db.club.create({
     data: {
       name: model.name,
+      stripePaymentLink: model.stripePaymentLink,
     },
   })
 }

@@ -8,10 +8,7 @@ export async function auth() {
   return await getServerSession(config)
 }
 
-export async function respondToInvite(
-  inviteId: string,
-  status: "accepted" | "rejected"
-) {
+export async function rejectInvite(inviteId: string) {
   const session = await auth()
   if (!session) {
     return
@@ -43,7 +40,7 @@ export async function respondToInvite(
       id: inviteId,
     },
     data: {
-      status,
+      status: "rejected",
     },
   })
 }
