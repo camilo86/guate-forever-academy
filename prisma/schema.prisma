@@ -93,3 +93,13 @@ model Invite {
   player Player @relation(fields: [playerId], references: [id], onDelete: Cascade)
   club   Club   @relation(fields: [clubId], references: [id], onDelete: Cascade)
 }
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  date        DateTime
+  address     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

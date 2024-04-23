@@ -18,3 +18,10 @@ export const createClubInviteFormSchema = z.object({
   playerId: z.string().min(1),
   clubId: z.string().min(1),
 })
+
+export const createEventFormSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  date: z.instanceof(Date),
+  address: z.string().optional(),
+})
