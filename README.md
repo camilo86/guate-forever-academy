@@ -19,6 +19,13 @@ GOOGLE_CLIENT_SECRET="..."
 # Stripe
 STRIPE_SECRET_KEY="..."
 STRIPE_WEBHOOK_SECRET_KEY="..."
+
+# Resend (Email provider)
+AUTH_RESEND_KEY="..."
+
+# Set this to the email that will send the login links.
+# This email needs to be registed in Resend, otherwise it won't work
+FROM_EMAIL="app@example.com"
 ```
 
 3. Create migrations `npx prisma migrate dev`
