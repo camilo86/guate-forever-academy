@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Club, Player } from "@prisma/client"
+import { Club, Player, User } from "@prisma/client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -41,8 +41,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { createClubInvite, getClubsAndPlayers } from "./actions"
 
-export type Parent = { name: string }
-export type PlayerWithParent = Player & { user: Parent }
+export type PlayerWithParent = Player & { user: User }
 
 export const columns: ColumnDef<PlayerWithParent>[] = [
   {
@@ -52,9 +51,14 @@ export const columns: ColumnDef<PlayerWithParent>[] = [
   {
     accessorKey: "user",
     header: "Parent",
-    cell(props) {
-      const value = props.getValue() as Parent
-      return value ? value.name : "-"
+    cell({ row }) {
+      const { user } = row.original
+
+      if (!user) {
+        return "--"
+      }
+
+      return user.name || user.email || "--"
     },
   },
   {

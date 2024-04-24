@@ -51,7 +51,7 @@ export function Navbar() {
                 referrerPolicy="no-referrer"
               />
               <AvatarFallback>
-                {getNameInitials(data?.user?.name)}
+                {getNameInitials(data?.user?.name, data?.user?.email)}
               </AvatarFallback>
             </Avatar>
             <span className="ml-2 font-semibold">{data?.user?.name}</span>

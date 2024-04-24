@@ -29,7 +29,9 @@ export function UserNav() {
               alt={data?.user?.email || ""}
               referrerPolicy="no-referrer"
             />
-            <AvatarFallback>{getNameInitials(data?.user?.name)}</AvatarFallback>
+            <AvatarFallback>
+              {getNameInitials(data?.user?.name, data?.user?.email)}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

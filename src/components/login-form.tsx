@@ -1,15 +1,38 @@
 "use client"
 
-import Link from "next/link"
-import { FaFacebook, FaGoogle } from "react-icons/fa"
-
+import { loginFormSchema } from "@/../types/guate"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn, useSession } from "next-auth/react"
+import Link from "next/link"
+import { useForm } from "react-hook-form"
+import { FaGoogle } from "react-icons/fa"
+import { z } from "zod"
+
 import { Button } from "./ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form"
 import { Input } from "./ui/input"
 import { Separator } from "./ui/separator"
 
 export function LoginForm() {
   const { data: session } = useSession()
+
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+    },
+  })
+
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    signIn("email", { email: values.email })
+  }
 
   if (session) {
     return (
@@ -38,37 +61,43 @@ export function LoginForm() {
             Enter your email below to login to your account
           </p>
         </div>
-        <div className="grid gap-4">
-          <div className="grid gap-2">
-            <Input
-              id="email"
-              type="email"
-              placeholder="john@example.com"
-              required
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder="john@example.com"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-          <Button type="submit" className="w-full">
-            Continue
-          </Button>
-          <Separator />
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => signIn("google")}
-          >
-            <FaGoogle className="mr-2" /> Continue with Google
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full"
-            onClick={() => signIn("facebook")}
-          >
-            <FaFacebook className="mr-2" /> Continue with Facebook
-          </Button>
-        </div>
+            <Button type="submit" className="w-full">
+              Continue
+            </Button>
+          </form>
+        </Form>
+
+        <Separator />
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => signIn("google")}
+        >
+          <FaGoogle className="mr-2" /> Continue with Google
+        </Button>
+
         <div className="mt-4 text-center text-sm">
           Don&apos;t have an account?{" "}
-          <Link href="#" className="underline">
+          <Link href="/signup" className="underline">
             Sign up
           </Link>
         </div>

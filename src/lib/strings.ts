@@ -1,5 +1,14 @@
-export function getNameInitials(name: string | null | undefined) {
-  if (!name) return ""
+export function getNameInitials(name: string | null | undefined, email = "") {
+  console.log("name", name)
+  console.log("email", email)
+
+  if (!name) {
+    if (email) {
+      return getNameInitials(email)
+    }
+
+    return "U"
+  }
 
   const [firstName, lastName] = name.toUpperCase().split(" ")
 

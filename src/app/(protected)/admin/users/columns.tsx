@@ -9,6 +9,11 @@ export const columns: ColumnDef<UserWithPlayers>[] = [
   {
     accessorKey: "name",
     header: "Name",
+    cell({ row }) {
+      const { name } = row.original
+
+      return name || "--"
+    },
   },
   {
     accessorKey: "email",
